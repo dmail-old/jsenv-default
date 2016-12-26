@@ -1,0 +1,23 @@
+{
+	"name": "jsenv-default",
+	"version": "0.0.1",
+	"description": "Run JavaScript everywhere",
+	"license": "UNLICENSED",
+	"dependencies": {
+		"jsenv-core": "https://github.com/jsenv/core.git",
+		"jsenv-cli": "https://github.com/jsenv/cli.git"
+	},
+	"scripts": {
+		"preinstall": "npm link C:/Users/Damien/Documents/Github/core && npm link C:/Users/Damien/Documents/Github/cli",
+		"test": "node ./bin/run test/modules/module-test.js -test",
+		"cover": "node ./bin/run test/modules/module-test.js -test -cover",
+		"cover-console": "node ./bin/run test/modules/module-test.js -test -cover -cover-report-console",
+		"cover-html": "node ./bin/run test/modules/module-test.js -test -cover -cover-report-console -cover-report-html",
+		"cover-json": "node ./bin/run test/modules/module-test.js -test -cover -cover-report-console -cover-report-json",
+		"ci": "node ./bin/run test/modules/module-test.js -test -cover -cover-upload-codecov -cover-upload-codecov-token=f695edf1-d0f4-4799-bb08-46955137f0c3"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jsenv/default"
+	}
+}
