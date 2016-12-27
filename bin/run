@@ -1,0 +1,108 @@
+#!/usr/bin/env node
+
+var commandAPI = require('../src/command-api.js');
+
+function startCommand(params) {
+    var filepath = params.filename;
+    var options = {};
+
+    // console.log('params', params);
+
+    if (params.cover) {
+        options.cover = {
+            cover: {
+                // lib/module-cover/index.js accept some arguments but atm command line cannot override them
+            },
+            report: {
+                console: params['cover-report-console'],
+                html: params['cover-report-html'],
+                json: params['cover-report-json']
+            },
+            upload: {
+                codecov: params['cover-upload-codecov'],
+                codecovToken: params['cover-upload-codecov-token']
+            }
+        };
+    }
+    if (params.test) {
+        options.test = {
+            uri: 'auto'
+        };
+    }
+
+    if (params.platform === 'node') {
+        require('./node.js')(filepath, options);
+    }
+}
+
+function versionCommand() {
+    var path = require('path');
+    var packagePath = path.resolve(__dirname, '../package.json');
+    var packageMeta = require(packagePath);
+    console.log(packageMeta.version);
+}
+
+var commandSignatures = {
+    0: {
+        type: 'string',
+        alias: 'filename',
+        fn: startCommand,
+        params: {
+            verbose: false,
+            platform: {
+                type: 'string',
+                default: 'node',
+                enum: ['node'] // one day we'll allow 'browser' and even target specific ones as 'phanthomjs', 'firefox', ...
+            },
+            cover: {
+                default: false,
+                params: {
+                    report: {
+                        params: {
+                            console: true,
+                            json: false,
+                            html: false
+                        }
+                    },
+                    upload: {
+                        params: {
+                            codecov: {
+                                params: {
+                                    token: {
+                                        type: 'string'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            test: {
+                type: 'boolean',
+                default: false,
+                params: {
+                    report: {
+                        params: {
+                            console: true,
+                            json: false
+                        }
+                    }
+                }
+            }
+        }
+    },
+    version: {
+        type: 'boolean',
+        default: false,
+        fn: versionCommand
+    },
+    usage: {
+        default: true,
+        fn: function() {
+            console.log('usage jsenv <path>');
+        }
+    }
+};
+
+var commandApi = commandAPI(commandSignatures);
+commandApi.exec(process.argv.slice(2));

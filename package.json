@@ -1,8 +1,12 @@
 {
-	"name": "jsenv-default",
+	"name": "jsenv",
 	"version": "0.0.1",
 	"description": "Run JavaScript everywhere",
 	"license": "UNLICENSED",
+	"preferGlobal": true,
+	"bin": {
+		"jsenv": "./bin/run"
+	},
 	"dependencies": {
 		"jsenv-core": "https://github.com/jsenv/core.git",
 		"jsenv-cli": "https://github.com/jsenv/cli.git"

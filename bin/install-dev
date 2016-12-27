@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+/*
+
+I'm using this script every time I want to work on this module on a new machine
+It will git clone the dependencies in ./github_modules/dmail (github_modules is in .gitignore)
+Then npm link every ./github_modules/dmail/* into ./node_modules/@dmail/*
+
+for now I do nothing I'll add this when it will make more sens
+
+- on récupère un token afin de pouvoir git clone les moudules git ayant besoin d'une authorization
+- lit package.json dependencies, devDependencies
+- toutes celles qui commence par @dmail/ on regarde si il exists un projet git ayant ce nom dans le folder
+- si aucun projet git n'existe alors git clone en utilisant le token
+- ensuite on run npm link depuis la ou se trouve system-run afin qu'npm crée la commande jsenv
+
+*/
+
+function ok() {
+
+}
+
+ok();
